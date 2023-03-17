@@ -1,0 +1,51 @@
+{
+	"id": "cad49935-97e6-4551-bef1-fad4a29c6db7",
+	"name": "API Testing ",
+	"values": [
+		{
+			"key": "token",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "reqresAPI",
+			"value": "https://reqres.in/api/users/",
+			"enabled": true
+		},
+		{
+			"key": "gitHubAPI",
+			"value": "https://api.github.com/user/repos",
+			"enabled": true
+		},
+		{
+			"key": "mockyAPI",
+			"value": "https://run.mocky.io/v3/084bfb48-1a10-4f93-89bf-d7c95c8319e5",
+			"enabled": true
+		},
+		{
+			"key": "nameRepo",
+			"value": "Postman testing API 55",
+			"enabled": true
+		},
+		{
+			"key": "randomNumber",
+			"value": 0,
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "2",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userName",
+			"value": "morpheus",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-03-15T20:23:28.722Z",
+	"_postman_exported_using": "Postman/10.11.2"
+}

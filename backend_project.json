@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "3ef86f5f-9029-4611-ad59-802d52f4e2a9",
+		"name": "backend_project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6713106"
+	},
+	"item": [
+		{
+			"name": "Test GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const schema = {\r",
+							"    \"type\":\"object\",\r",
+							"    \"properties\":{\r",
+							"        \"userId\":{ \"type\":\"number\"},\r",
+							"        \"id\":{\"type\":\"number\"},\r",
+							"        \"title\":{ \"type\":\"string\"},\r",
+							"        \"completed\":{\"type\":\"boolean\"}\r",
+							"    },\r",
+							"    \"required\":[\"userId\",\"completed\"],\r",
+							"    \"additionalProperties\":false\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Validate schema\",() => {\r",
+							"    pm.response.to.have.jsonSchema(schema);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response time is less than 4000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(4000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate the main data in the response\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.userId).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.title).to.eql(\"delectus aut autem\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{mockyAPI}}",
+					"host": [
+						"{{mockyAPI}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", () => {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify response name\", ()=> {\r",
+							"    let response = pm.response.json();\r",
+							"    pm.expect(response.name).to.eql(\"morpheus\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{userName}}\",\r\n    \"job\": \"{{job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{reqresAPI}}/{{userId}}",
+					"host": [
+						"{{reqresAPI}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{reqresAPI}}/{{userId}}",
+					"host": [
+						"{{reqresAPI}}"
+					],
+					"path": [
+						"{{userId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"\r",
+							"pm.test(\"Validate Data Types \", function () {\r",
+							"\r",
+							"pm.expect(jsonData.id).to.be.a(\"number\");\r",
+							"pm.expect(jsonData.full_name).to.be.a(\"string\");  \r",
+							"pm.expect(jsonData.private).to.be.false;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Owner Id should exist, not be null, be a number and be above zero\", function () {\r",
+							"    pm.expect(jsonData.owner).to.have.property('id');\r",
+							"   pm.expect(jsonData.owner.id).not.eql(null);\r",
+							"   pm.expect(jsonData.owner.id).to.be.a(\"number\");\r",
+							"    pm.expect(jsonData.owner.id).be.above(0);\r",
+							"  \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 5000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.environment.set('nameRepo', \"Postman testing API \"+Math.floor(Math.random() * 100));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "d734d334b70153c8229344a319db59428aec138e",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{nameRepo}}\",\r\n  \"description\": \"This is your first repository\",\r\n  \"homepage\": \"https://github.com\",\r\n  \"private\": false,\r\n  \"has_issues\": true,\r\n  \"has_projects\": true,\r\n  \"has_wiki\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gitHubAPI}}",
+					"host": [
+						"{{gitHubAPI}}"
+					]
+				},
+				"description": "create Repository in gitHub using the api and also add a token variable"
+			},
+			"response": []
+		}
+	]
+}
